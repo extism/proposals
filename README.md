@@ -20,6 +20,8 @@ collaboration.
 
 ## Table of Contents
 
-1. [Basic Plugin Calling Convention](./EIP-001-plugin-calling-convention.md)
+1. [Plugin calling convention](./EIP-001-plugin-calling-convention.md)
+2. [Module namespace for host functions](./EIP-002-module-namespace-for-host-functions.md)
+3. [Language-specific library repo management](./EIP-003-language-specific-library-repo-management.md)
 
 
