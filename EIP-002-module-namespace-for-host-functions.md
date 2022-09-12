@@ -8,7 +8,7 @@ a module.
 
 ## Solution
 
-Use the `extism` namespace for all imports from language SDKs. We would provide this namespace from the runtime linker, and express the override in
+Use the `env` namespace for all imports from language SDKs. We would provide this namespace from the runtime linker, and express the override in
 each language SDK we distribute. See the support table included below.
 
 ## Considerations
@@ -47,3 +47,5 @@ the issue and propose a fix.
 
 Additionally, we can avoid symbol collisions or shadowing if there is ever support for module linking or something like the component model. Ideally,
 we don't restrict the use of or conflict with other namespaced functions.
+
+However, it adds complexity to define the namespace unless its totally necessary - no clear reason has emerged to add it so for now we'll use `env`.
