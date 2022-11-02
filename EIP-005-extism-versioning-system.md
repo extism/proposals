@@ -37,3 +37,41 @@ Changes in the Host API will break the SDK libraries but not the PDKs and vice v
 The following is a hypothetical future state of the ecoystem:
 
 ![Versioning Table](content/005-versioning.png)
+
+There are a few different methods we can explore to communicate compatibility. First I think we need documentation and to keep a table similar to the tables above. This should be generated from some parseable source of truth, like yaml.
+
+Second, I think we can encode into the SDK and PDK which versions they are compatible with. The way to do this would be to share a function b/w the Host API and the Plugin API. There is already a function which we could re-use in the host `const char *extism_version(void)`. We could also export this function into the Plugin API.
+
+The function would return a string like this `<semver-version>-<color>-<sea-creature>`. e.g.:
+
+```
+v2.5.13-limegreen-oyster
+```
+
+splitting by `-` gives you the components, the semver version, the SDK color, and the PDK edition.
+
+The Host SDKs can contain some code like this:
+
+```python
+import extism
+
+def check_compatiblity():
+    _, color, edition = extism.extism_version().split('-')
+    if color != "limegreen":
+        print(f"This client requires a 'limegreen' version of Extism. See the docs here: https://extism.org/compatibility#python-sdk")
+```
+
+The library could panic or just log an error.
+
+The Plugin PDKs could contain code like this:
+
+```python
+import extism
+
+def check_compatiblity():
+    _, color, edition = extism.extism_version().split('-')
+    if edition != "oyster":
+        print(f"This client requires an 'oyster' edition of Extism. See the docs here: https://extism.org/compatibility#python-sdk")
+```
+
+For compiled languages they may not even get this far if the breaking change affects the types. But for the dynamic languages, and behavioral changes not expressable in types, these checks will be needed.
