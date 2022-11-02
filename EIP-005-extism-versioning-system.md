@@ -5,7 +5,9 @@
 Extism has many separate release channels. There are three categories of software in the ecosystem:
 
 a. The Host SDKs
+
 b. The Plugin PDKs
+
 c. The runtime (the shared library)
 
 If `a` is the number of host languages we support, and `b` is the number of PDK languages we support. The total number of release channels is:
