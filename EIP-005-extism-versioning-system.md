@@ -34,7 +34,7 @@ The key to understanding this is to look at the ecosystem as having two coupling
 
 ![libextism coupling](content/005-coupling.png)
 
-Changes in the Host API will break the SDK libraries but not the PDKs and vice versa. We may encounter contradicitons to this but we should hopefylly be able to limit the changes to just the SDK. The Plugin API should rarely change as it breaks the entire world of built plugins. But the Host API may change more frequently. Thus we have decided to tie the version of the runtime to breaking changes in the Host API. Every new major bump in the runtime will represent a breaking change in the Host SDK. Rarely, a major bump in the runtime will indicate a breaking change in the Host OR the Plugin API. 
+Changes in the Host API will break the SDK libraries but not the PDKs and vice versa. We may encounter contradicitons to this but we should hopefully be able to limit the changes to just the SDK. The Plugin API should rarely change as it breaks the entire world of built plugins. But the Host API may change more frequently. Thus we have decided to tie the version of the runtime to breaking changes in the Host API. Every new major bump in the runtime will represent a breaking change in the Host SDK. Rarely, a major bump in the runtime will indicate a breaking change in the Host OR the Plugin API. 
 
 The following is a hypothetical future state of the ecoystem:
 
