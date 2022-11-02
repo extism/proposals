@@ -44,7 +44,7 @@ There are a few different methods we can explore to communicate compatibility. F
 
 Second, I think we can encode into the SDK and PDK which versions they are compatible with. The way to do this would be to share a function b/w the Host API and the Plugin API. There is already a function which we could re-use in the host `const char *extism_version(void)`. We could also export this function into the Plugin API.
 
-The function would return a string like this `<semver-version>-<color>-<sea-creature>`. e.g.:
+The function would return a string like this `<semver-version>-<color>-<edition>`. e.g.:
 
 ```
 v2.5.13-limegreen-oyster
