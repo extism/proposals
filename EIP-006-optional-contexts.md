@@ -25,34 +25,51 @@ ctx = extism.Context()
 plugin = extism.Plugin(manifest, context=ctx)
 ```
 
-But a new interface is added that creates a default `Context` for each `Plugin` if one 
-isn't provided:
+But with this proposal a new interface is added that creates an implicit `Context` for 
+`Plugin`s when one isn't provided. 
 
 ```python
 plugin = extism.Plugin(manifest)
 ```
 
-To implement this there is one major breaking change to the SDKs. Instead of `context`
-being a required argument: 
-
+To implement this there is one small, but major breaking change to the SDKs. Instead of 
+`context` being a required argument, it would become optional. This requires changing the
+order of the arguments (which is an admittedly an annoying fix for Extism users).
 
 ```python
+# Required
 class Plugin:
   def __init__(self, context, manifest):
     self.context = context
-```
 
-It becomes an optional argument:
-
-```python
+# Default
 class Plugin:
   def __init__(self, manifest, context=None):
     self.context = context or Context()
 ```
 
-Each language has slight variations, but among languages with support for optional arguments
-this pattern is pretty consistent. In languages that don't support optional arguments, a new 
-function can be added.
+In Javascript this change is slightly more disruptive disruptive because the `context`
+argument needs to be moved to the end of the argument list.
+
+```javascript
+# Required 
+class Plugin {
+  constructor(context, wasm, wasi = false, config = {}){
+    ...
+  }
+}
+
+# Optional
+class Plugin {
+  constructor(wasm, wasi = false, config = {}, context = null){
+    if (context === null) context = new Context();
+    ...
+  }
+}```
+
+
+Among languages with support for optional arguments this pattern is pretty consistent. 
+Otherwise, a new function can be added.
 
 ```go
 // NewPlugin creates a plugin in its own context
@@ -74,6 +91,7 @@ to
 ```go
 plugin, err := extism.NewPlugin(wasm, functions, wasi)
 ```
+
 
 ## Considerations
 
