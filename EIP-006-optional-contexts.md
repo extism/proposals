@@ -65,7 +65,8 @@ class Plugin {
     if (context === null) context = new Context();
     ...
   }
-}```
+}
+```
 
 
 Among languages with support for optional arguments this pattern is pretty consistent. 
