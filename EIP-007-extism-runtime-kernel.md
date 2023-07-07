@@ -26,12 +26,12 @@ on `extism-runtime.wasm`.
 ### Input
 
 Extism holds a pointer to the input and only copies it into memory using the `extism_input_load_*` functions. This
-would require the input to be copied into the Extism memory when a plugin is called. I haven't found this to cause any major
-performance hit. To make this work we will need to add an `extism_input_set` function which is called from the host to specify
-a slice of memory that should be treated as input data (this is similar to how the `extism_output_set` function works)
+would require the input to be copied into the Extism memory all at once when a plugin is called. I haven't found this 
+to cause any major performance hit. To make this work we will need to add an `extism_input_set` function which is called
+from the host to specify a slice of memory that should be treated as input data (this is similar to how the `extism_output_set`
+function works)
 
 ### Errors
 
-Error tracking will also be moved into the kernel, it provides two new functions:
-- `extism_error_set`: To set the current error to a block of memory
+Error tracking will also be moved into the kernel, it requires one new function:
 - `extism_error_get`: To return the offset in memory that points to the current error (or 0 if it's not set)
