@@ -17,6 +17,10 @@ the user plugins. This should allow use to use the same memory management implem
 This will not break any existing plugins or Extism features (timeout, cancellation, memory limits) - there may be some additional
 functions added to interact with the Extism kernel, but in general major API changes should be avoided.
 
+Another thing to consider is how this should be organized - should the kernel live in it's own repo? Or along with the current
+runtime? Where does it live after the SDKs are split into their own repos? It's likely that multiple SDKs will end up depending
+on `extism-runtime.wasm`.
+ 
 ## Changes
 
 ### Input
