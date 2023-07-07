@@ -9,15 +9,15 @@ we're currently missing out on.
 
 ## Solution
 
-In order to make the Extism runtime more portable, we can compile it to WebAssembly and link it with the user plugins. This
-should allow use to use the same memory management implementation across many different runtimes. 
+In order to make the Extism runtime more portable, we can compile as much of the runtime as possible to WebAssembly and link it with
+the user plugins. This should allow use to use the same memory management implementation across many different runtimes.
 
 ## Considerations
 
 This will not break any existing plugins or Extism features (timeout, cancellation, memory limits) - there may be some additional
 functions added to interact with the Extism kernel, but in general major API changes should be avoided.
 
-#### Changes
+## Changes
 
 ### Input
 
@@ -28,6 +28,6 @@ a slice of memory that should be treated as input data (this is similar to how t
 
 ### Errors
 
-Error tracking will also be moved into the kernel, it provides two new functions: 
+Error tracking will also be moved into the kernel, it provides two new functions:
 - `extism_error_set`: To set the current error to a block of memory
 - `extism_error_get`: To return the offset in memory that points to the current error (or 0 if it's not set)
