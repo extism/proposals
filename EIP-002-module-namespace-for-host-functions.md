@@ -11,7 +11,8 @@ a module.
 Having picked `env` for convenience (and possible lack of support for alternatives), we now need to pick a more specialized name to maintain compatibility
 across different types of WebAssembly applications.
 
-It now makes sense to use `extism:env` - a component-model friendly, namespace for Extism host functions.
+It now makes sense to use `extism:env` - a component-model friendly, namespace for Extism host functions. User-defined host functions will also be placed in the
+`extism:env` namespace by default.
 
 ## Considerations
 
