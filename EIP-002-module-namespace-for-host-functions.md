@@ -8,8 +8,10 @@ a module.
 
 ## Solution
 
-Use the `env` namespace for all imports from language SDKs. We would provide this namespace from the runtime linker, and express the override in
-each language SDK we distribute. See the support table included below.
+Having picked `env` for convenience (and possible lack of support for alternatives), we now need to pick a more specialized name to maintain compatibility
+across different types of WebAssembly applications.
+
+It now makes sense to use `extism:env` - a component-model friendly, namespace for Extism host functions.
 
 ## Considerations
 
@@ -29,7 +31,7 @@ Language support for module namespace declaration:
 | AssemblyScript | ✅ | https://www.assemblyscript.org/concepts.html#module-imports |
 | Go | ✅ | https://github.com/tinygo-org/tinygo/issues/1120#issuecomment-631179445 |
 | Swift | ✅ | https://book.swiftwasm.org/examples/importing-function.html#importing-a-function-from-host-environments |
-| Zig | ❓ | [tbd](https://github.com/ziglang/zig/blob/e0178890ba5ad76fdf5ba955f479ccf6f05a3d49/lib/std/builtin.zig#L673-L678) |
+| Zig | ✅ | [tbd](https://github.com/ziglang/zig/blob/e0178890ba5ad76fdf5ba955f479ccf6f05a3d49/lib/std/builtin.zig#L673-L678) |
 | Kotlin | ❓ | https://github.com/JetBrains/kotlin/tree/ea836fd46a1fef07d77c96f9d7e8d7807f793453/libraries/stdlib/wasm |
 
 #### Default behavior
@@ -41,11 +43,9 @@ E.g. Rust uses `env`, AssemblyScript uses `import`.
 #### Clarity / Explicitness
 
 There are benefits to using an explicit namespace in this context, such as the ability to immediately diagnose that a function is expected to
-come from our runtime (consider using the `extism` module namespace). This is useful when debugging a module and seeing clearly that there are
-functions used from Extism. Or if there are other functions expected, which are not within the `extism` namespace, it becomes easier to pinpoint
+come from our runtime (consider using the `extism:env` module namespace). This is useful when debugging a module and seeing clearly that there are
+functions used from Extism. Or if there are other functions expected, which are not within the `extism:env` namespace, it becomes easier to pinpoint
 the issue and propose a fix.
 
 Additionally, we can avoid symbol collisions or shadowing if there is ever support for module linking or something like the component model. Ideally,
 we don't restrict the use of or conflict with other namespaced functions.
-
-However, it adds complexity to define the namespace unless its totally necessary - no clear reason has emerged to add it so for now we'll use `env`.
