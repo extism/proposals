@@ -44,9 +44,8 @@ E.g. Rust uses `env`, AssemblyScript uses `import`.
 #### Clarity / Explicitness
 
 There are benefits to using an explicit namespace in this context, such as the ability to immediately diagnose that a function is expected to
-come from our runtime (consider using the `extism:env` module namespace). This is useful when debugging a module and seeing clearly that there are
-functions used from Extism. Or if there are other functions expected, which are not within the `extism:env` namespace, it becomes easier to pinpoint
-the issue and propose a fix.
+come from our runtime. This is useful when debugging a module and seeing clearly that there are functions used from Extism. Or if there are other 
+functions expected, which are not within the `extism:host/env` namespace, it becomes easier to pinpoint the issue and propose a fix.
 
 Additionally, we can avoid symbol collisions or shadowing if there is ever support for module linking or something like the component model. Ideally,
 we don't restrict the use of or conflict with other namespaced functions.
