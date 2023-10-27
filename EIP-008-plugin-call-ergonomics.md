@@ -19,4 +19,3 @@ TBD
 ## Considerations
 
 - The use of Extism plugins should feel idiomatic in each language. Don't repeat the mistake of OTel, which makes it feel like you're using a Java API in every supported language.
-- Don't forget to give @chrisdickinson cookies on occasion :D
