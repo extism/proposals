@@ -4,7 +4,7 @@ Plugin Call Ergonomics
 
 ## Purpose
 
-Evaluate possible improvements to the ergonomics of calling plugins.
+Evaluate possible improvements to the ergonomics of calling plugin functions.
 
 Some notes for discussion:
 
