@@ -54,7 +54,7 @@ interface Imports {
 
 Step 1 of the CLI will be to generate a `shim.wasm` from this interface. The shim needs
 to generate some thunk functions as well as import `__invoke` from the core module (which gets
-linked later in the pipeline).
+linked later in the pipeline). I spiked a working [prototype of this here](https://gist.github.com/bhelx/41fba8959fe7738a23cd750983341216).
 
 `shim.wasm` will be linked with `core.wasm` using [wasm-merge](https://github.com/WebAssembly/binaryen#wasm-merge)
 which is kind of like a linker but a little bit higher level. I may also consider using `wasm-ld`
