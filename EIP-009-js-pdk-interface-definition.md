@@ -66,6 +66,39 @@ and dump out to the final wasm after a few passes from wasm-opt.
 
 TODO: add info on how imports and exports are wired up
 
+### Rust to JS Bridge
+
+Suppose we have 2 host functions and one export. The shim module that is generated
+should look something like this (TODO this is still not accurate yet):
+
+```wat
+(module
+  ; included by us for invoking the js runtime
+  (import "coremod" "__invoke" (func (;0;) (type 0)))
+
+  ; 2 Extism Host Functions
+  (import "coremod" "myHostFunc1" (func (;1;) (type 0)))
+  (import "coremod" "myHostFunc2" (func (;2;) (type 0)))
+
+  ; the generated thunk for the export
+  (func (;3;) (type 0) (param i32) (result i32)
+    local.get 0
+    call 0)
+  (export "myExport" (func 3)))
+```
+
+For exports, we can leave the behavior the same. For each export we will generate
+a thunk function that calls `__invoke`.
+
+For imports we have a bit of a challenge. The JS code, which is executed in the core
+module, needs to be able to invoke these host functions.
+
+The JS code (and underlying rust and c code) doesn't know about these functions, their names or their function
+indexes at compile time.
+
+TODO: investigate how to solve. call_indirect? another merge?
+
+
 ## Considerations
 
 ### WIT
