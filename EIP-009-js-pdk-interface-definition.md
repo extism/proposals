@@ -39,16 +39,19 @@ it will work for 1.0:
 The programmer will define their interface in a typescript file `interface.d.ts`:
 
 ```typescript
-// all extism exports have type () -> i32
-interface Exports {
-  myExport(): I32;
-}
-
 // this interface is optional and types are  defined by you
 // to match your host functions
-interface Imports {
-  myHostFunc1(p: I64, q: I32): I64;
-  myHostFunc2(p: I64): I64;
+declare module 'extism:host' {
+  interface user {
+    myHostFunction1(p: I32, q: I32): I32;
+    myHostFunction2(p: I32): I64;
+  }
+}
+
+// main is the plugin module
+declare module 'main' {
+  // all extism exports have type () -> i32
+  export function greet(): I32;
 }
 ```
 
