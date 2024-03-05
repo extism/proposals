@@ -1,4 +1,4 @@
-# JS-PDK Interface Defintion
+# JS-PDK Interface Definition
 
 ## Purpose
 
@@ -6,24 +6,27 @@ We need to support host functions in the JS PDK but the current way we define
 the interface, while working for exports, will not work for imports. Here is a rough
 outline of how the current system works:
 
-First we compile quickjs to wasm, we call this the "engine" or "core" module.
-This module is a rust wasm app with quickjs embedded and has one custom function as an export `__invoke`.
-`__invoke` takes an index (n), it looks at all the javascript exports in your main module, sorts them alphabetically,
-then invokes the (nth) one.
+1. We compile QuickJS to wasm to create the `engine` or `core` module. This
+   module is a Rust Wasm app with QuickJS embedded; it has one custom export,
+   `__invoke`. `__invoke` takes an index (`N`), looks at all the JS exports
+   in your main module sorted alphabetically, then invokes the `N`th one.
+2. Next, we use [Wizer] to partially evaluate the core module. The user passes
+   in some JS which we evaluate as part of this process. We determine the Wasm
+   exports by evaluating the JS in this partial evaluation step, reading the
+   exports from the JS module, sorting them alphabetically, then adding them to
+   our (Wasm) exports table. We generate code for these functions (or "thunks")
+   which calls `__invoke` with the appropriate export function ID.
 
-The next step is to wizen and mutate this core module. The user passes in some javascript
-which we eval and wizen. We need need to expose the exports in the export section. We do this
-by evaling the js (in this compile step), reading the js module's exports, sorting them alphabetically,
-and adding them to the exports table in order. The code for these functions (we call thunks) are also generated 
-and just call `__invoke` with the export function id (where is sits in the order).
-
-There are some downsides to doing this for exports, it's complicated and slow, but it also works fine.
-This will not work for imports because we'd need to come up with a very wacky way to programatically extract
-and type the imports from the user's js code. We can no longer magically assume we will know the wasm signature.
-Exports are easy because all Extism exports have the same signature. Imports do not. Furthermore this process
-of mutating a wasm module and adding some exports and functions works because it is a fairly additive process.
-Importing on the other hand requires re-aligning a lot of other tables. And if i were to continue custom coding
-that I'd be building a linker.
+While it works fine for exports, there are some downsides to this approach.
+It's complicated and slow, and does not work for imports. For imports, we'd
+need to come up with a way to programmatically extract the imports and their
+types from the user's JS code. We can't assume we'll know the Wasm signature.
+Exports are easy because all Extism exports have the same signature, but
+imports may have any valid Wasm signature. This technique works well for
+exports in part because it is purely additive: we add new functions at the end
+of the module; on the other hand, imports require re-aligning a lot of index
+spaces. This path leads to writing a linker, which is out of scope for us right
+now.
 
 ## Solution
 
