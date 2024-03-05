@@ -97,8 +97,6 @@ module, needs to be able to invoke these host functions.
 The JS code (and underlying rust and c code) doesn't know about these functions, their names or their function
 indexes at compile time. That's why the import shim will expose a call-indirect to the host functions.
 
-TODO: this means all types need to be the same, perhaps we need to also expose the type parameter?
-
 import-shim.wasm:
 
 ```wat
@@ -132,7 +130,3 @@ I considered using WIT for the interface but:
 2. I believe the binding generators come with all the ABI stuff along with it
 
 We can always add WIT support too and support both.
-
-### wasm-merge vs wasm-ld (or normal linker)
-
-TODO
