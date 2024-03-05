@@ -103,8 +103,8 @@ import-shim.wasm:
 (module
   (type $int2int (func (param i32) (result i32)))
 
-  (import "coremode" "myHostFunc1" (func $myHostFunc1 (type $int2int)))
-  (import "coremode" "myHostFunc2" (func $myHostFunc2 (type $int2int)))
+  (import "coremod" "myHostFunc1" (func $myHostFunc1 (type $int2int)))
+  (import "coremod" "myHostFunc2" (func $myHostFunc2 (type $int2int)))
 
   (table 2 funcref)
   (elem (i32.const 0) $myHostFunc1 $myHostFunc2)
