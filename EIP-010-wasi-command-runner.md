@@ -1,5 +1,10 @@
 #  WASI Command Runner
 
+```
+status: in-review
+implementation: partial
+```
+
 ## Purpose
 
 Allow running WASI command modules with Extism. Make passing in and reading back data from a module easy when development with an Extism PDK isn't possible or desired. Continue expanding Extism to be a general purpose Web Assembly framework by adding a non-plugin oriented interface. Make running a command style module similar to running an Extism Plugin by providing a buffer in and buffers out interface. Such interface would be convenient for creating a library function around a command module for example.
